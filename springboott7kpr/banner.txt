@@ -1,0 +1,194 @@
+
+
+# 1.打开项目,查找SQL 文件
+
+如果存在SQL 语句,就进行如下步骤
+
+
+# 2.SQL文件导入数据库,并修改数据库的 DB 名称 itsource_ 开头
+
+数据库添加配置语句:
+```xml
+ jdbc:mysql://localhost:13306/itsource_1?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+```
+
+## 2.1 添加 Flyway
+
+添加flyway 依赖
+```xml
+mysql 5.x
+<dependency>
+    <groupId>org.flywaydb</groupId>
+    <artifactId>flyway-core</artifactId>
+    <version>6.4.4</version>
+</dependency>
+
+<dependency>
+    <groupId>org.flywaydb</groupId>
+    <artifactId>flyway-core</artifactId>
+    <version>5.2.4</version>
+</dependency>
+
+mysql 8.x
+
+<dependency>
+    <groupId>org.flywaydb</groupId>
+    <artifactId>flyway-mysql</artifactId>
+    <version>8.5.7</version>
+</dependency>
+```
+
+
+可选的 配置文件:
+```yml
+spring:
+  flyway:
+    enabled: true
+    encoding: UTF-8
+    # 可以支持多个location, 用','隔开
+    locations: classpath:db/。
+    # migrate是否校验
+    validate-on-migrate: true
+    baseline-on-migrate: true
+    create-schemas: true
+```
+
+**修改SQL 文件:**
+- 迁移脚本: ` V[版本号]__.sql` 如: V1__init.sql  （**注意双下划线**）
+> resources 目录下 创建一个文件夹 `db/migration` ,只要目录下的 SQL 脚本版本号大于当前版本号才会执行迁移
+
+
+如果 resources 下的sql 文件不存在 在 calsspath 下,可能是xml 文件设置有问题
+![image.png](https://itguang.oss-cn-beijing.aliyuncs.com/20231231164849.png)
+
+> 注意: 把调试后的SQL 语句放到代码里面后,需要把 flyway 表删除哦
+
+
+# 3.启动类添加微信公众号推广日志
+
+```java
+public static void main(String[] args) throws UnknownHostException {
+    Logger log = LoggerFactory.getLogger(CinemaManagerApplication.class);
+    ConfigurableApplicationContext applicationContext = SpringApplication.run(CinemaManagerApplication.class, args);
+    ConfigurableEnvironment env = applicationContext.getEnvironment();
+    log.info("\n\n====== \033[31;4m 关注微信公众号: \033[40;32;4m【ITSource每日分享】,一万个IT资源等你发现：项目源码，软件工具，面试面经，学习视频 应有尽有！！！\033[0m ==========================================\n\t" +
+                    "\033[31;4m点击下方链接扫码关注 \033[0m: https://mmbiz.qpic.cn/sz_mmbiz_jpg/JfvqwvA8e1vfT6fJAGV0hibeQY1Sia4iaCZ6iaicDl1joUxPsicXoiaeyWuAl8Vhmfiah9j0bjNYVuske8G3ZGopia92RyQ/640 \n" +
+                    "=============================================================================================================================================================\n" +
+                    "应用程序启动成功! 点击下方链接开始体验吧~:\n\t" +
+                    "后端本机地址: \thttp://127.0.0.1:{}\n\t" +
+                    "后端内网地址: \thttp://{}:{}\n" +
+                    "===============================================================================================================================================================\n",
+            env.getProperty("server.port"),
+            InetAddress.getLocalHost().getHostAddress(),
+            env.getProperty("server.port")
+    );
+}
+
+public static void main(String[] args) throws UnknownHostException {
+    Logger log = LoggerFactory.getLogger(SpringbootSchemaApplication.class);
+    ConfigurableApplicationContext applicationContext = SpringApplication.run(SpringbootSchemaApplication.class, args);
+    ConfigurableEnvironment env = applicationContext.getEnvironment();
+    String contextPath = env.getProperty("server.servlet.context-path");
+    log.info("\n\n====== \033[31;4m 关注微信公众号: \033[40;32;4m【ITSource每日分享】,一万个IT资源等你发现：项目源码，软件工具，面试面经，学习视频 应有尽有！！！\033[0m ==========================================\n\t" +
+                "\033[31;4m点击下方链接扫码关注 \033[0m: https://mmbiz.qpic.cn/sz_mmbiz_jpg/JfvqwvA8e1vfT6fJAGV0hibeQY1Sia4iaCZ6iaicDl1joUxPsicXoiaeyWuAl8Vhmfiah9j0bjNYVuske8G3ZGopia92RyQ/640 \n" +
+                "=============================================================================================================================================================\n" +
+                "应用程序启动成功! 点击下方链接开始体验吧~:\n\t" +
+                "管理后台地址: \thttp://localhost:{}{}/admin/dist/index.html\n\t" +
+                "前台地址: \thttp://localhost:{}{}/front/index.html\n" +
+                "===============================================================================================================================================================\n",
+          env.getProperty("server.port"),contextPath,
+          env.getProperty("server.port"),contextPath
+    );
+}
+```
+
+若不存在 lombok 需要添加
+
+```xml
+<dependency>
+    <groupId>org.projectlombok</groupId>
+    <artifactId>lombok</artifactId>
+    <version>1.18.26</version>
+</dependency>
+```
+
+# 4 添加 banner.txt
+
+resources 目录下
+
+```xml
+============================================================================
+============================================================================
+============================================================================
+
+[32;4m 》》》》 关注微信公众号 【ITSource每日分享】,免费获取一万个IT资源：项目源码，软件工具，面试面经，学习视频 应有尽有！！！ 《《《《
+点击链接扫码关注微信公众号:  https://mmbiz.qpic.cn/sz_mmbiz_jpg/JfvqwvA8e1vfT6fJAGV0hibeQY1Sia4iaCZ6iaicDl1joUxPsicXoiaeyWuAl8Vhmfiah9j0bjNYVuske8G3ZGopia92RyQ/640 [0m
+
+=============================================================================
+============================================================================
+============================================================================
+```
+
+# 5 POM-添加jar 包信息
+
+```xml
+<groupId>com.zbw</groupId>
+<artifactId>demo</artifactId>
+<version>0.0.1-SNAPSHOT</version>
+<packaging>jar</packaging>
+
+<name>ITSource 每日分享</name>
+<description>关注微信公众号: 【ITSource每日分享】,免费获取一万个IT资源：项目源码，软件工具，面试面经，学习视频 应有尽有！！！</description>
+```
+
+# 5.1 POM-pom 替换阿里云仓库
+注意在 </project> 下的一级类目
+
+```xml
+<repositories>
+    <repository>
+        <id>public</id>
+        <name>aliyun nexus</name>
+        <url>https://maven.aliyun.com/repository/public/</url>
+        <releases>            <enabled>true</enabled>
+        </releases>
+    </repository>
+</repositories>
+
+<pluginRepositories>
+    <pluginRepository>
+        <id>public</id>
+        <name>aliyun nexus</name>
+        <url>https://maven.aliyun.com/repository/public/</url>
+        <releases>            <enabled>true</enabled>
+        </releases>
+        <snapshots>            <enabled>false</enabled>
+        </snapshots>
+    </pluginRepository>
+</pluginRepositories>
+```
+
+
+# 6. SQL 替换
+
+自己运行项目,没有问题,把SQL 预计导出来一份,替换原有的SQL 语句,
+
+**并在 SQL 语句头部和尾部添加如下信息**:
+```
+/*
+============================================================================  ============================================================================  ============================================================================
+
+关注微信公众号 【ITSource每日分享】,免费获取一万个IT资源：项目源码，软件工具，面试面经，学习视频 应有尽有！！！
+
+点击链接扫码关注微信公众号:  https://mmbiz.qpic.cn/sz_mmbiz_jpg/JfvqwvA8e1vfT6fJAGV0hibeQY1Sia4iaCZ6iaicDl1joUxPsicXoiaeyWuAl8Vhmfiah9j0bjNYVuske8G3ZGopia92RyQ/640
+  =============================================================================
+============================================================================  ============================================================================  */
+
+```
+
+# 6 RADME.md 替换
+
+```
+
+
+项目下新建 Readme.md 文件,替换之
