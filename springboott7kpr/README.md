@@ -99,31 +99,13 @@ spring.datasource.password=root
 - Step4: 启动后端项目
   【截图】运行按钮
 > Idea 运行后端项目,看到以下信息,表示运行成功
-> ![success.png](https://itguang.oss-cn-beijing.aliyuncs.com/202410261434231.png)
+> ![ITSource_2024122543.png](https://itguang.oss-cn-beijing.aliyuncs.com/202412131226504.png)
+
+
 
 
 ### 4. 前端部署
-
-#### 管理员端
-打开终端, 执行下面命令,运行前端项目:
-- Step1: 安装npm依赖
->  npm install --registry=http://registry.npmmirror.com
-- Step2: 启动前端项目
-> npm run serve
-> 看到如下信息表示部署成功,浏览器点击任何一个即可打开
-> ![Clip_2024-10-26_11-47-44.png](https://itguang.oss-cn-beijing.aliyuncs.com/202410261147236.png)
-
-
-**管理员账号登录： 账号：itsource  密码：itsource**
-#### 用户端
-打开终端, 执行下面命令,运行前端项目:
-- Step1: 安装npm依赖
->  npm install --registry=http://registry.npmmirror.com
-- Step2: 启动前端项目
-> npm run serve
-> 看到如下信息表示部署成功,浏览器点击任何一个即可打开
-![Clip_2024-10-26_11-46-55.png](https://itguang.oss-cn-beijing.aliyuncs.com/202410261147196.png)
-
+项目默认已经构建好了前端静态文件,如果不二次开发的话,不需要单独启动前端项目.
 
 ### 注意事项
 
@@ -181,3 +163,18 @@ spring.datasource.password=root
 - [ITSource分享第33期【在线小说阅读系统】](https://mp.weixin.qq.com/s/NAjSRu-dX9hJ4uftcOsvHA)
 
 ---
+
+
+---
+
+## 下载地址:
+
+```
+> 百度云源码 :链接：
+ https://pan.baidu.com/s/1Cc2WelN3vI3lrFq_NPqz_A?pwd=s8ju 提取码: s8ju 
+
+常用开发软件:
+链接：https://pan.baidu.com/s/1KSLqE3eCi51FSfftkmLfGw?pwd=mc8v 
+提取码：mc8v
+
+```
